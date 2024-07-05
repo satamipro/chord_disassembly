@@ -263,6 +263,7 @@ namespace ChordAnalysis
             int length;
             List<string> ans = [];
             string chord = string.Join("", q);
+            chord = chord.Replace("＃", "#").Replace("／", "").Replace("…", "").Replace("♯", "#").Replace("699", "69").Replace("susu", "sus").Replace("sug", "aug").Replace("agu", "aug").Replace("※", "").Replace("O", "o");
             Chord tmp = new Chord();
             // Console.WriteLine(chord);
             while (true)
@@ -414,7 +415,7 @@ namespace ChordAnalysis
             return 0;
         }
 
-        public static List<int[][]> GetOne_HotChordVector(List<string[]> chords)
+        public static List<int[][]> MakeTeachData(List<string[]> chords)
         {
             string[] voclabulary = MakeVocabulary(chords);
             int length = voclabulary.Length;
@@ -430,6 +431,18 @@ namespace ChordAnalysis
                 one_HotChordVector.Add(songChordVector);
             }
             return one_HotChordVector;
+        }
+
+        public static int[][] MakeTeachData(string[] chords, string[] vocabulary)
+        {
+            int length = vocabulary.Length;
+            int[][] teachData = new int[chords.Length][];
+            for (int i = 0; i < chords.Length; i++)
+            {
+                teachData[i] = new int[length];
+                teachData[i][Array.IndexOf(vocabulary, chords[i])] = 1;
+            }
+            return teachData;
         }
     }
 }

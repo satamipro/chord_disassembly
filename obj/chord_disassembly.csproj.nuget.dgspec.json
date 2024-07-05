@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ShodaiToida\\Documents\\code\\chord_disassembly\\chord_disassembly.csproj": {}
+    "C:\\Users\\selfa\\ドキュメント\\code\\chord_disassembly\\chord_disassembly.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ShodaiToida\\Documents\\code\\chord_disassembly\\chord_disassembly.csproj": {
+    "C:\\Users\\selfa\\ドキュメント\\code\\chord_disassembly\\chord_disassembly.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ShodaiToida\\Documents\\code\\chord_disassembly\\chord_disassembly.csproj",
+        "projectUniqueName": "C:\\Users\\selfa\\ドキュメント\\code\\chord_disassembly\\chord_disassembly.csproj",
         "projectName": "chord_disassembly",
-        "projectPath": "C:\\Users\\ShodaiToida\\Documents\\code\\chord_disassembly\\chord_disassembly.csproj",
-        "packagesPath": "C:\\Users\\ShodaiToida\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ShodaiToida\\Documents\\code\\chord_disassembly\\obj\\",
+        "projectPath": "C:\\Users\\selfa\\ドキュメント\\code\\chord_disassembly\\chord_disassembly.csproj",
+        "packagesPath": "C:\\Users\\selfa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\selfa\\ドキュメント\\code\\chord_disassembly\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ShodaiToida\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\selfa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

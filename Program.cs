@@ -13,55 +13,63 @@ namespace Program
     {
         public static void Main()
         {
-
-            //読み込みファイル内にあるすべてのjsonファイルからトレーニングデータと教師データを作成し、jsonファイルに書き出すプログラム。
+            //###############################################################################################################
+            //読み込みファイル内にあるすべてのfixedなjsonファイルからトレーニングデータと教師データを作成し、jsonファイルに書き出すプログラム。
             //必要に応じてvocabularyも書き出す
+            //###############################################################################################################
+
+            //###############################################################################################################
+            //ここから実行に必要な変数定義（適宜改変して使う事！)
+            string folderName = "test1";
+            //###############################################################################################################
+
             //jsonファイルの読み込み
             string[] filePaths = GetAllJsonFilePath("/in");
             List<string> filenames = GetAllJsonFileNames("/in");
             List<string[]> rawdata = ReadAllJsonFiles(filePaths);
 
-            //vocabularyの作成
-            HashSet<string> vocabulary = [];
+            //変数の定義
             string json;
 
-            //ここにrawdtaからchordsListの作成
+            //ここにvocabularyの作成
+            string[] vocabulary = MakeVocabulary(rawdata);
+            json = JsonConvert.SerializeObject(vocabulary, Formatting.Indented);
+            File.WriteAllText("out/" + folderName + "/vocabulary.json", json);
 
-            //ここにchordsListからtrainDataの作成
-
-            //ここにhordListからteachDataの作成
-
-            //
-
-            //one-hot chordvectorの作成
-            List<int[][]> one_HotChordVector = GetOne_HotChordVector(rawdata);
+            //ここにfixeddataからchordsListの作成
+            Directory.CreateDirectory("out/" + folderName + "/chordList/");
             for (int i = 0; i < rawdata.Count; i++)
             {
-                string writePath = filePaths[i].Replace(filenames[i], "").Replace("in\\", "out\\");
-                Directory.CreateDirectory(writePath + "teachdata\\");
-                json = JsonConvert.SerializeObject(one_HotChordVector[i], Formatting.Indented);
-                File.WriteAllText(writePath + "teachdata\\teach" + filenames[i], json);
+                //基本的にfixedなデータしか受け付けないが、それを確認するためにもう一度整理する。
+                //ここで止まったらデータに誤りがある。
+                string[] chords = AlignChordsFromString(rawdata[i]).ToArray();
+                json = JsonConvert.SerializeObject(chords, Formatting.Indented);
+                File.WriteAllText("out/" + folderName + "/chordList/" + filenames[i], json);
             }
 
-            //コードベクターの取得,書き込み
-            for (int i = 0; i < filePaths.Length; i++)
+            //ここにchordsListからtrainDataの作成
+            Directory.CreateDirectory("out/" + folderName + "/trainData");
+            for (int i = 0; i < rawdata.Count; i++)
             {
-                int length = rawdata[i].Length;
-                List<int[]> chordVector = [];
-                for (int j = 0; j < length; j++)
+                int[][] trainData = new int[rawdata[i].Length][];
+                for (int j = 0; j < rawdata[i].Length; j++)
                 {
-                    chordVector.Add(DisassembleChord(GetChord(rawdata[i][j])));
-                    vocabulary.Add(rawdata[i][j]);
+                    trainData[j] = DisassembleChord(GetChord(rawdata[i][j]));
                 }
-                string writePath = filePaths[i].Replace(filenames[i], "").Replace("in\\", "out\\");
-                Directory.CreateDirectory(writePath + "chordVector\\");
-                json = JsonConvert.SerializeObject(chordVector, Formatting.Indented);
-                File.WriteAllText(writePath + "chordVector\\Vec" + filenames[i], json);
+                json = JsonConvert.SerializeObject(trainData, Formatting.Indented);
+                File.WriteAllText("out/" + folderName + "/trainData/" + filenames[i], json);
+            }
+
+            //ここにchordListからteachDataの作成
+            Directory.CreateDirectory("out/" + folderName + "/teachData");
+            for (int i = 0; i < rawdata.Count; i++)
+            {
+                int[][] teachData = MakeTeachData(rawdata[i], vocabulary);
+                json = JsonConvert.SerializeObject(teachData, Formatting.Indented);
+                File.WriteAllText("out/" + folderName + "/teachData/" + filenames[i], json);
             }
 
 
-            json = JsonConvert.SerializeObject(vocabulary, Formatting.Indented);
-            File.WriteAllText("out//vocabulary.json", json);
         }
     }
 }
