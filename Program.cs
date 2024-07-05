@@ -13,13 +13,25 @@ namespace Program
     {
         public static void Main()
         {
-            //変数定義
+
+            //読み込みファイル内にあるすべてのjsonファイルからトレーニングデータと教師データを作成し、jsonファイルに書き出すプログラム。
+            //必要に応じてvocabularyも書き出す
             //jsonファイルの読み込み
             string[] filePaths = GetAllJsonFilePath("/in");
             List<string> filenames = GetAllJsonFileNames("/in");
             List<string[]> rawdata = ReadAllJsonFiles(filePaths);
+
+            //vocabularyの作成
             HashSet<string> vocabulary = [];
             string json;
+
+            //ここにrawdtaからchordsListの作成
+
+            //ここにchordsListからtrainDataの作成
+
+            //ここにhordListからteachDataの作成
+
+            //
 
             //one-hot chordvectorの作成
             List<int[][]> one_HotChordVector = GetOne_HotChordVector(rawdata);
